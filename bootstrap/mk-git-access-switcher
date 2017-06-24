@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ -z "$1" ]; then
+    >&2 echo Usage: mk-git-access-switcher [USER_OR_ORG]
+    exit 1
+else
+    USER_OR_ORG=$1
+fi
+
+cat <<EOF
+if [ -n "$CIRCLE_SHA1" -a -n "$GITHUB_TOKEN" ]; then
+    perl -i.bak -pne "s/git\\\\+https:\\\\/\\\\/github\\\\.com\\\\/${USER_OR_ORG}/git\\\\+https:\\\\/\\\\/${GITHUB_TOKEN}\\\\@github\\\\.com\\\\/${USER_OR_ORG}/" package.json
+fi
+EOF

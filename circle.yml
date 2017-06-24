@@ -1,5 +1,6 @@
 dependencies:
   override:
+    - ./git-access-switcher
     - echo $GOOGLE_CREDENTIAL > $HOME/$CIRCLE_PROJECT_REPONAME/gas-config.json
     - yarn install --no-lockfile
 general:
