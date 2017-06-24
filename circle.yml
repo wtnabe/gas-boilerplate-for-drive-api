@@ -1,0 +1,30 @@
+dependencies:
+  override:
+    - echo $GOOGLE_CREDENTIAL > $HOME/$CIRCLE_PROJECT_REPONAME/gas-config.json
+    - yarn install --no-lockfile
+general:
+  branches:
+    only:
+      - master
+      - /pull-req\/.*/
+      - /release\/.*/
+      - /hotfix\/.*/
+test:
+  override:
+    - yarn test
+    - yarn run build
+    - yarn run lint
+deployment:
+  production:
+    branch: master
+    commands:
+      - node prepare-project production
+      - yarn run push
+  staging:
+    branch:
+      - /pull-req\/.*/
+      - /hotfix\/.*/
+      - /release\/.*/
+    commands:
+      - node prepare-project
+      - yarn run push

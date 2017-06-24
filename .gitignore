@@ -1,0 +1,6 @@
+*~
+*.bak
+/node_modules
+src/*.js
+gas-config.json
+javascripts/obj/

@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-gas": "*",
+    "babel-register": "*",
+    "babelify": "*",
+    "brfs-babel": "*",
+    "browserify": "*",
+    "eslint": "*",
+    "gas-manager": "*",
+    "gasify": "*",
+    "intelli-espower-loader": "*",
+    "lodash": "*",
+    "mocha": "*",
+    "mustache": "*",
+    "power-assert": "*",
+    "sinon": "*",
+    "watchify": "*"
+  },
+  "scripts": {
+    "node": "node --require babel-register",
+    "prepare-project": "node prepare-project",
+    "build": "browserify -o src/code.js -p gasify -g babelify -t brfs-babel -t babelify javascripts/*.js",
+    "watch": "watchify -d -v -o src/code.js -p gasify -t brfs-babel -t babelify javascripts/*.js",
+    "init": "gas init",
+    "pull": "gas -s config/gas-project.json -c gas-config.json download",
+    "push": "yarn run build && gas -s config/gas-project.json -c gas-config.json upload",
+    "lint": "eslint src/code.js",
+    "test": "mocha --require intelli-espower-loader --require babel-register --recursive test",
+    "postinstall": "yarn run prepare-project"
+  }
+}

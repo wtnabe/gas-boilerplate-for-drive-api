@@ -1,0 +1,25 @@
+// -*- mode: javascript -*-
+
+const Mastache = require('mustache');
+const fs       = require('fs');
+
+var arg = (process.argv.length > 2) ? process.argv[process.argv.length-1] : 'staging';
+const env = (arg == 'production') ? 'production' : 'staging'; 
+const component = require('./config/gas-components.json')[env];
+
+/**
+ * @param Object view
+ */
+function build_project_json(view) {
+  const src  = 'javascripts/gas-project.json.mjs';
+  const dest = 'config/gas-project.json';
+  
+  return fs.writeFileSync(dest, Mastache.render(fs.readFileSync(src, 'utf8'), view));
+}
+
+function dump_component(component) {
+  return fs.writeFileSync('./javascripts/obj/component.json', JSON.stringify(component));
+}
+
+dump_component(component);
+build_project_json(component);

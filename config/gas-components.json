@@ -1,0 +1,8 @@
+{
+  "production": {
+    "srcId": ""
+  },
+  "staging": {
+    "srcId": ""
+  }
+}
